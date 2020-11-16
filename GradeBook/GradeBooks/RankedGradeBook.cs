@@ -19,7 +19,7 @@ namespace GradeBook.GradeBooks
             else
             {
                 int studentsRank = Convert.ToInt32(Students.Count / 5) -1;
-                List<double> grades = new List<double>();
+                List<Double> grades = new List<Double>();
 
                 foreach(var student in Students)
                 {
