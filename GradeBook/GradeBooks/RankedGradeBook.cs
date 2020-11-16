@@ -16,16 +16,16 @@ namespace GradeBook.GradeBooks
                 throw new InvalidOperationException("Ranked-grading requires a minimum of 5 students to work");
             else
             {
-                int studentsRank = Convert.ToInt32(Students.Count * 0.2) - 1;
+                int studentsRank = (int)Math.Ceiling(Students.Count * 0.2);
                 var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
 
-                if (grades.IndexOf(averageGrade) <= studentsRank)
+                if (grades.IndexOf(averageGrade) <= studentsRank - 1)
                     return 'A';
-                else if (grades.IndexOf(averageGrade) <= (studentsRank * 2))
+                else if (grades.IndexOf(averageGrade) <= (studentsRank * 2) -1)
                     return 'B';
-                else if (grades.IndexOf(averageGrade) <= (studentsRank * 3))
+                else if (grades.IndexOf(averageGrade) <= (studentsRank * 3) -1)
                     return 'C';
-                else if (grades.IndexOf(averageGrade) <= (studentsRank * 4))
+                else if (grades.IndexOf(averageGrade) <= (studentsRank * 4) -1)
                     return 'D';
             }
             return 'F';
