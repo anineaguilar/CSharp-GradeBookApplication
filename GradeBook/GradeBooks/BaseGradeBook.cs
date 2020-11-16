@@ -14,10 +14,12 @@ namespace GradeBook.GradeBooks
         public GradeBookType Type { get; set; }
         public string Name { get; set; }
         public List<Student> Students { get; set; }
+        public bool IsWeighted { get; set; }
 
-        public BaseGradeBook(string name)
+        public BaseGradeBook(string name, bool isWeighted)
         {
             Name = name;
+            IsWeighted = isWeighted;
             Students = new List<Student>();
         }
 
@@ -75,7 +77,7 @@ namespace GradeBook.GradeBooks
             }
         }
 
-        public static BaseGradeBook Load(string name)
+        public static BaseGradeBook Load(string name, bool isWeighted)
         {
             if (!File.Exists(name + ".gdbk"))
             {
@@ -105,20 +107,26 @@ namespace GradeBook.GradeBooks
             }
         }
 
-        public virtual double GetGPA(char letterGrade, StudentType studentType)
+        public virtual int GetGPA(char letterGrade, StudentType studentType)
         {
+            int GPA = 0;
+            if (IsWeighted.Equals(true) && (studentType.Equals("Honors") || studentType.Equals("DualEnrolled")))
+            {
+                GPA = 1;
+            }
+            
             switch (letterGrade)
             {
                 case 'A':
-                    return 4;
+                    return 4 + GPA;
                 case 'B':
-                    return 3;
+                    return 3 + GPA;
                 case 'C':
-                    return 2;
+                    return 2 + GPA;
                 case 'D':
-                    return 1;
+                    return 1 + GPA;
                 case 'F':
-                    return 0;
+                    return 0 + GPA;
             }
             return 0;
         }
